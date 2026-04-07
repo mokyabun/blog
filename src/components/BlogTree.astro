@@ -1,0 +1,49 @@
+---
+import type { CollectionEntry } from "astro:content"
+import BlogTreeNode, { type FileNode, type FolderNode } from "./BlogTreeNode.astro"
+
+type Props = {
+    posts: CollectionEntry<"blog">[]
+    currentId: string
+}
+
+const { posts, currentId } = Astro.props
+
+const root: Record<string, FileNode | FolderNode> = {}
+
+for (const post of posts) {
+    const parts = post.id.split("/")
+    let current = root
+
+    for (let i = 0; i < parts.length - 1; i++) {
+        const part = parts[i]
+        if (!current[part] || current[part].type === "file") {
+            current[part] = { type: "folder", name: part, children: {} }
+        }
+        current = (current[part] as FolderNode).children
+    }
+
+    const fileName = parts[parts.length - 1]
+    current[fileName] = {
+        type: "file",
+        id: post.id,
+        title: post.data.title,
+    }
+}
+
+const sortedRoot = Object.entries(root).sort(([, a], [, b]) => {
+    if (a.type !== b.type) return a.type === "folder" ? -1 : 1
+    return (a.type === "folder" ? a.name : a.title).localeCompare(
+        b.type === "folder" ? b.name : b.title,
+    )
+})
+---
+
+<ul class="menu menu-sm w-full py-2 h-full overflow-y-auto">
+    <li class="menu-title">Blog</li>
+    {
+        sortedRoot.map(([name, node]) => (
+            <BlogTreeNode name={name} node={node} currentId={currentId} />
+        ))
+    }
+</ul>

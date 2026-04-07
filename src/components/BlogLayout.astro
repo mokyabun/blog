@@ -1,0 +1,21 @@
+---
+
+---
+
+<main>
+    <div class="flex w-full gap-[1px] bg-base-300 mt-16">
+        <div
+            class="bg-base-100 flex-1 hidden lg:block min-w-[300px] sticky top-16 h-[calc(100vh-4rem)]"
+        >
+            <slot name="left" />
+        </div>
+        <main class="lg:max-w-4xl lg:mx-auto bg-base-100 p-4">
+            <slot />
+        </main>
+        <div
+            class="bg-base-100 flex-1 hidden xl:block min-w-[300px] sticky top-16 h-[calc(100vh-4rem)]"
+        >
+            <slot name="right" />
+        </div>
+    </div>
+</main>

@@ -1,0 +1,104 @@
+---
+import Hero from "@/assets/hero.webp"
+import ChzzkChat from "@/assets/chzzk-chat.webp"
+import AIFestival from "@/assets/ai-festival.webp"
+import AIVTuber from "@/assets/ai-vtuber.webp"
+import UniversalKiosk from "@/assets/universial-kiosk.webp"
+import BaseHead from "../components/BaseHead.astro"
+import Footer from "../components/Footer.astro"
+import Header from "../components/Header.astro"
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts"
+import BaseLayout from "@/components/BaseLayout.astro"
+import Title from "@/components/Title.astro"
+import ServiceCard from "@/components/ServiceCard.astro"
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <Header transparentHeader={true} />
+        <Title image={Hero} title="프로젝트 목록" description="개발했던 프로젝트 목록입니다!" />
+        <BaseLayout>
+            <div class="flex flex-col gap-12">
+                <ServiceCard
+                    title="치지직 채팅 CSS 생성기"
+                    image={ChzzkChat}
+                    href="https://chat.kya.sh"
+                    tags={[
+                        { name: "Frontend", color: "secondary" },
+                        { name: "Sveltekit", color: "secondary" },
+                        { name: "Eta", color: "secondary" },
+                        { name: "Tailwind CSS", color: "secondary" },
+                        { name: "DaisyUI", color: "secondary" },
+                    ]}
+                >
+                    치지직 채팅창의 CSS를 쉽게 생성할 수 있는 웹 서비스입니다.
+                    <br />
+                    총 3.32천 이상의 페이지 클릭수를 기록하였으며, 다양한 스트리머분들 께서 사용해주셨습니다.
+                </ServiceCard>
+                <ServiceCard
+                    title="AI 콘텐츠 페스티벌 나이비스 안내 AI"
+                    image={AIFestival}
+                    href="https://github.com/mokyabun"
+                    tags={[
+                        { name: "AI", color: "secondary" },
+                        { name: "Backend", color: "secondary" },
+                        { name: "MuseTalk", color: "secondary" },
+                        { name: "MuseV", color: "secondary" },
+                        { name: "FastAPI", color: "secondary" },
+                        { name: "WebRTC", color: "secondary" },
+                    ]}
+                >
+                    사용자가 음성으로 질문을 하면 AI가 답변하는 서비스였습니다.
+                    <br />
+                    총 3일간 운영되었으며, 총 1800번 이상의 질문에 답변하였습니다.
+                </ServiceCard>
+                <ServiceCard
+                    title="AI 엘리 버츄얼 AI 외주"
+                    image={AIVTuber}
+                    href="https://github.com/mokyabun"
+                    tags={[
+                        { name: "AI", color: "secondary" },
+                        { name: "Backend", color: "secondary" },
+                        { name: "Frontend", color: "secondary" },
+                        { name: "NestJS", color: "secondary" },
+                        { name: "WebRTC", color: "secondary" },
+                        { name: "Sveltekit", color: "secondary" },
+                    ]}
+                >
+                    스트리머 엘리님의 버츄얼 AI 스트리머를 개발하는 프로젝트였습니다.
+                    <br />
+                    음성 TTS 학습, AI 실시간 답변, 버츄얼 모델과의 통신, OBS와의 WebRTC 연동, 화면 및
+                    채팅창 인식 등 다양한 기술이 사용되었습니다.
+                    <br />
+                    총 3개월간 개발되었으며, 처음에는 NestJS로 개발하였으나, UX 개선을 위해 추후에는 프론트엔드
+                    앱으로 전환하였습니다.
+                </ServiceCard>
+                <ServiceCard
+                    title="유니버셜 키오스크"
+                    image={UniversalKiosk}
+                    href="https://github.com/mokyabun/universal-kiosk"
+                    tags={[
+                        { name: "Backend", color: "secondary" },
+                        { name: "Frontend", color: "secondary" },
+                        { name: "Flask", color: "secondary" },
+                        { name: "Embedded", color: "secondary" },
+                        { name: "ESP32", color: "secondary" },
+                    ]}
+                >
+                    숭실대학교 팀 프로젝트로 진행한 유니버셜 키오스크입니다.
+                    <br />
+                    시각 장애인 분들, 또는 거동이 불편하신 분들이 키오스크를 쉽게 사용할 수 있도록 돕는
+                    서비스입니다.
+                    <br />
+                    ESP32로 구현된 하드웨어와 Flask로 구현된 백엔드, 그리고 Svelte로 구현된 프론트엔드로
+                    구성되어 있습니다.
+                </ServiceCard>
+                <Footer />
+            </div>
+        </BaseLayout>
+    </body>
+</html>

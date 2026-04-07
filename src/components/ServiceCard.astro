@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets"
+
+interface Props {
+    image: ImageMetadata
+    title: string
+    href: string
+    tags: { name: string; color: string }[]
+}
+
+const { image, title, href, tags } = Astro.props as Props
+---
+
+<div class="flex gap-10">
+    <Image src={image} alt={title} class="w-64 h-48 object-cover object-center rounded-lg" />
+    <a class="flex flex-col gap-4" href={href} target="_blank">
+        <h2 class="text-3xl font-bold">{title}</h2>
+        <p class="font-light">
+            <slot />
+            <br />
+        </p>
+
+        <div class="flex-1 flex items-end gap-2">
+            {tags.map((tag) => <div class={`badge badge-${tag.color}`}>{tag.name}</div>)}
+        </div>
+    </a>
+</div>

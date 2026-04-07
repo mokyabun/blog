@@ -1,86 +1,69 @@
 ---
-import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import type { CollectionEntry } from "astro:content"
+import { getCollection } from "astro:content"
+import BaseHead from "../components/BaseHead.astro"
+import BlogLayout from "@/components/BlogLayout.astro"
+import BlogTree from "@/components/BlogTree.astro"
+import Footer from "../components/Footer.astro"
+import FormattedDate from "../components/FormattedDate.astro"
+import Header from "../components/Header.astro"
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<"blog">["data"] & { id: string }
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, id } = Astro.props
+
+const allPosts = await getCollection("blog")
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
+    <head>
+        <BaseHead title={title} description={description} />
+    </head>
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+    <body>
+        <Header transparentHeader={!!heroImage} />
+        <BlogLayout>
+            <div slot="left" class="overflow-y-auto border-base-300">
+                <BlogTree posts={allPosts} currentId={id} />
+            </div>
+            <article class="flex flex-col gap-[1px] bg-base-300 *:bg-base-100">
+                <div class="px-4 py-7 flex flex-col gap-4">
+                    <h1 class="text-4xl font-extrabold">{title}</h1>
+                    <div class="flex w-full mt-4 opacity-60 items-center">
+                        <p class="text-md">{description}</p>
+                        <span class="mx-2">·</span>
+                        <div class="text-sm">
+                            <FormattedDate date={pubDate} />
+                            <!-- just dont use update date -->
+                            <!-- {updatedDate && `(Updated: ${updatedDate})`} -->
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 py-7 prose">
+                    <slot />
+                </div>
+            </article>
+            <div slot="right" class="flex flex-col gap-8 py-7 2xl:px-8 lg:px-4">
+                <!-- table of contents -->
+                <div class="border border-base-300 rounded-lg">
+                    <h2 class="text-xl font-bold px-4 py-3 border-b border-base-300">
+                        Table of Contents
+                    </h2>
+                    <div class="px-4 py-3 min-h-[200px]">
+                        <p class="text-sm text-gray-600">아직 구현되지 않았습니다.</p>
+                    </div>
+                </div>
+                <!-- related posts (just random thing in same tree?) -->
+                <div class="border border-base-300 rounded-lg">
+                    <h2 class="text-xl font-bold px-4 py-3 border-b border-base-300">
+                        Related Posts
+                    </h2>
+                    <div class="px-4 py-3 min-h-[200px]">
+                        <p class="text-sm text-gray-600">아직 구현되지 않았습니다.</p>
+                    </div>
+                </div>
+            </div>
+            <Footer />
+        </BlogLayout>
+    </body>
 </html>

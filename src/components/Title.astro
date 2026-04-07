@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets"
+
+interface Props {
+    title?: string
+    description?: string
+    image?: ImageMetadata
+}
+
+const { title, description, image } = Astro.props
+---
+
+<section class="hero-image overflow-hidden text-white">
+    <div class="relative">
+        {
+            title && description && (
+                <div class="absolute inset-0 flex flex-col pb-20 z-20 lg:max-w-5xl lg:mx-auto justify-end gap-4">
+                    {title && <h1 class="text-4xl lg:text-6xl font-extrabold">{title}</h1>}
+                    {description && <p class="mt-4 text-xs lg:text-sm">- {description}</p>}
+                </div>
+            )
+        }
+        <div class="absolute inset-0 flex items-center justify-center z-10">
+            <div class="h-full w-full bg-black opacity-60"></div>
+        </div>
+        {
+            image && (
+                <div class="blur-lg w-full h-full ">
+                    <Image
+                        width={1020}
+                        height={510}
+                        src={image}
+                        alt={description || ""}
+                        class="object-cover w-full h-64 lg:h-96"
+                    />
+                </div>
+            )
+        }
+    </div>
+    <div id="hero-sentinel" aria-hidden="true"></div>
+</section>
