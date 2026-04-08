@@ -1,26 +1,25 @@
 ---
 import Hero from "@/assets/hero.webp"
-import BaseHead from "../components/BaseHead.astro"
-import Footer from "../components/Footer.astro"
-import Header from "../components/Header.astro"
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts"
-import BaseLayout from "@/components/BaseLayout.astro"
-import Title from "@/components/Title.astro"
+import BaseHead from "@/components/shared/BaseHead.astro"
+import Footer from "@/components/shared/Footer.astro"
+import Header from "@/components/shared/Header.astro"
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts"
+import Title from "@/components/shared/Title.astro"
+import BaseWebsite from "@/components/shared/BaseWebsite.astro"
 ---
 
-<!doctype html>
-<html lang="en">
+
+<BaseWebsite>
     <head>
         <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     </head>
     <body>
         <Header transparentHeader={true} />
-        <Title image={Hero} />
-        <main class="lg:max-w-5xl lg:mx-auto px-4 py-8 bg-base-100">
-            <h1 class="text-4xl font-extrabold">{SITE_TITLE}</h1>
-            <p class="mt-4 text-lg text-gray-600">{SITE_DESCRIPTION}</p>
+        <Title image={Hero} title={SITE_TITLE} description={SITE_DESCRIPTION} />
+        <main class="lg:max-w-4xl lg:mx-auto px-4 py-8 bg-base-100">
             <div class="h-[1000vh] text-gray-600 mt-5 text-xs">아직 미완성 페이지입니다.</div>
         </main>
         <Footer />
     </body>
-</html>
+</BaseWebsite>
+
