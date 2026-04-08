@@ -30,7 +30,7 @@ const posts = (await getCollection("blog")).sort(
                     posts.map((post) => (
                         <li>
                             <a
-                                href={`/blog/${post.id}/`}
+                                href={`/blog/${post.id.replace(/\/index$/, "")}/`}
                                 class="flex items-start justify-between gap-4 py-4 hover:opacity-75 transition-opacity group"
                             >
                                 <div class="min-w-0">

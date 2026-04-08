@@ -13,17 +13,22 @@ const root: Record<string, FileNode | FolderNode> = {}
 
 for (const post of posts) {
     const parts = post.id.split("/")
+
+    // If last segment is "index", treat the parent folder as the file entry
+    const isIndex = parts[parts.length - 1] === "index"
+    const fileParts = isIndex ? parts.slice(0, -1) : parts
+
     let current = root
 
-    for (let i = 0; i < parts.length - 1; i++) {
-        const part = parts[i]
+    for (let i = 0; i < fileParts.length - 1; i++) {
+        const part = fileParts[i]
         if (!current[part] || current[part].type === "file") {
             current[part] = { type: "folder", name: part, children: {} }
         }
         current = (current[part] as FolderNode).children
     }
 
-    const fileName = parts[parts.length - 1]
+    const fileName = fileParts[fileParts.length - 1]
     current[fileName] = {
         type: "file",
         id: post.id,

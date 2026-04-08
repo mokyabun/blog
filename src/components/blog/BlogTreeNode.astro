@@ -20,7 +20,9 @@ type Props = {
 }
 
 const { name, node, currentId } = Astro.props
-const isActive = node.type === "file" && node.id === currentId
+const isActive =
+    node.type === "file" &&
+    node.id.replace(/\/index$/, "") === currentId.replace(/\/index$/, "")
 
 const sortedChildren =
     node.type === "folder"
@@ -36,7 +38,7 @@ const sortedChildren =
 {
     node.type === "file" ? (
         <li>
-            <a href={`/blog/${node.id}/`} class:list={[{ active: isActive }]} title={node.title}>
+            <a href={`/blog/${node.id.replace(/\/index$/, "")}/`} class:list={[{ active: isActive }]} title={node.title}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="13"
